@@ -6,18 +6,21 @@ from airflow.operators.python import PythonOperator, BranchPythonOperator
 
 
 def download_dataset():
+    """ function responsible for downloading the file in Kaggle """
     api = KaggleApi()
     api.authenticate()
     api.dataset_download_files('roche-data-science-coalition/uncover', './arq')
 
 
 def unzip_files():
+    """ function responsible for unzipping the downloaded file """
     import zipfile
     with zipfile.ZipFile('./arq/uncover.zip', 'r') as zipref:
         zipref.extractall('./arq/')
 
 
 def calculate_percentile():
+    """ function responsible for calculating the percentiles: 50, 75 and 90 of age """
     df = pd.read_excel('./arq/Canada_Hosp_COVID19_Inpatient_DatasetDefinitions/Canada_Hosp1_COVID_InpatientData.xlsx')
     
     percentile = {
@@ -30,6 +33,7 @@ def calculate_percentile():
 
 
 def calculate_ratio():
+    """ function responsible for calculating the adhesion ratio """
     df = pd.read_excel('./arq/Canada_Hosp_COVID19_Inpatient_DatasetDefinitions/Canada_Hosp1_COVID_InpatientData.xlsx')
     group = df.groupby('reason_for_admission').size().sort_values(ascending=False).reset_index()
     group = group.rename(columns={'reason_for_admission':'Motivo', 0:'Total'})
