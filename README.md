@@ -9,7 +9,7 @@
 
 ## Funcionalidades do projeto
 
- *Funções - arquivo dags/execution_covid.py
+ * Funções - arquivo dags/execution_covid.py
     - download_dataset: Responsável por autenticar e fazer o download do dataset utilizando a api do Kaggle.
     - unzip_files: Responsável por descompactar o arquivo baixado na task anterior.
     - calculate_percentile: Faz o calculo dos percentís 50, 75 e 90, utilizando o metodo quantile da biblioteca Pandas.
